@@ -4,7 +4,7 @@
       <div class="card bg-dark text-white supermarket-panel">
         <div class="card-header">
           <div class="pull-right">
-            <a href="#" class="btn btn-primary btn-sm">
+            <a href="//github.com/ftgibran/demo-supermarket" target="_blank" class="btn btn-primary btn-sm">
               <i class="fa fa-github"></i>
               Github
             </a>
@@ -23,15 +23,15 @@
                   <div class="row">
 
 
-                    <div class="col-sm-6 col-md-4">
+                    <div v-for="(item, i) in list" :key="i" class="col-sm-6 col-md-4">
                       <div class="list-item">
                         <div class="icon">
-                          <img src="../assets/img/foods/apple-1.svg" alt="icon"/>
+                          <img :src="`./static/img/foods/${item.icon}.svg`" alt="icon"/>
                         </div>
                         <div class="content">
-                          <h6 class="mb-1">List group item heading</h6>
-                          <div class="text-muted">R$ 90,00</div>
-                          <button class="btn btn-primary btn-sm mt-3">
+                          <h6 class="mb-1">{{item.name}}</h6>
+                          <div class="text-muted">{{(item.price / 100) | R$}}</div>
+                          <button @click="addToCart(item)" class="btn btn-primary btn-sm mt-3">
                             <i class="fa fa-plus"></i>
                             Adicionar
                           </button>
@@ -49,22 +49,22 @@
                   <div class="list-group">
 
 
-                    <div class="cart-item list-group-item list-group-item-action">
-                      <div class="icon">
-                        <img src="../assets/img/foods/apple-1.svg" alt="icon"/>
+                    <div v-for="(cartItem, i) in cart" :key="i" class="cart-item list-group-item list-group-item-action">
+                      <div class="icon" v-if="cartItem.item">
+                        <img :src="`../static/img/foods/${cartItem.item.icon}.svg`" alt="icon"/>
                       </div>
-                      <div class="content">
-                        <h6 class="mb-1">List group item heading</h6>
-                        <div class="text-muted">R$ 90,00</div>
+                      <div class="content" v-if="cartItem.item">
+                        <h6 class="mb-1">{{cartItem.item.name}}</h6>
+                        <div class="text-muted">{{(cartItem.quant * cartItem.item.price / 100) | R$}}</div>
                         <div class="pull-right">
-                          <button class="btn btn-outline-danger btn-sm">
+                          <button @click="removeFromCart(cartItem.item)" class="btn btn-outline-danger btn-sm">
                             <i class="fa fa-trash"></i>
                           </button>
-                          <button class="btn btn-outline-danger btn-sm">
+                          <button @click="decrease(cartItem.item)" class="btn btn-outline-danger btn-sm">
                             <i class="fa fa-minus"></i>
                           </button>
-                          <button class="btn btn-secondary btn-sm" disabled>3 unid.</button>
-                          <button class="btn btn-outline-success btn-sm">
+                          <button class="btn btn-secondary btn-sm" disabled>{{cartItem.quant}} unid.</button>
+                          <button @click="increase(cartItem.item)" class="btn btn-outline-success btn-sm">
                             <i class="fa fa-plus"></i>
                           </button>
                         </div>
@@ -80,7 +80,7 @@
                     <i class="fa fa-arrow-right"></i>
                   </button>
                   <strong>Total: </strong>
-                  <span>R$ 1000,00</span>
+                  <span>{{(total / 100) | R$}}</span>
                 </div>
               </div>
             </div>
@@ -189,9 +189,94 @@
 </style>
 
 <script>
+  import _ from 'lodash'
+  import list from '../data/supermarket.json'
+
   export default {
     data () {
-      return {}
+      return {
+        list,
+        cart: []
+      }
+    },
+
+    filters: {
+      /**
+       * @return {string}
+       */
+      R$ (value) {
+        let pref = 'R$ '
+        let div = ','
+        let decimal = commaDecimal(value)
+
+        function commaDecimal (value, precision = 2) {
+          let result = Math.round(Number(value) * 10 ** precision) / 10 ** precision
+          return result.toString().replace('.', ',')
+        }
+
+        // Two Cases: #,% (e.g. 1,9) or #,%% (e.g. 1,99)
+        if (decimal.indexOf(div) > 0) {
+          let integer = decimal.split(div)[0] // # (e.g. 1)
+          let cents = decimal.split(div)[1] // % or %% (e.g. 9 or 99)
+          if (cents.length === 1) cents = `${cents}0`
+
+          return `${pref}${integer}${div}${cents}`
+        }
+
+        // One Case: # (e.g. 1)
+        return `${pref}${decimal}${div}00`
+      }
+    },
+
+    computed: {
+      total () {
+        return _.sum(this.cart.map(el => el.item.price * el.quant))
+      }
+    },
+
+    mounted () {
+    },
+
+    methods: {
+      itemInCart (item) {
+        return this.cart.find(el => el.item === item)
+      },
+      addToCart (item) {
+        let itemInCart = this.itemInCart(item)
+
+        if (!itemInCart) {
+          this.cart.push({ item, quant: 1 })
+        } else {
+          itemInCart.quant += 1
+        }
+      },
+      removeFromCart (item) {
+        let itemInCart = this.itemInCart(item)
+
+        if (itemInCart) {
+          let i = this.cart.indexOf(itemInCart)
+          if (i !== -1) {
+            this.cart.splice(i, 1)
+          }
+        }
+      },
+      increase (item) {
+        let itemInCart = this.itemInCart(item)
+
+        if (itemInCart) {
+          itemInCart.quant += 1
+        }
+      },
+      decrease (item) {
+        let itemInCart = this.itemInCart(item)
+
+        if (itemInCart && --itemInCart.quant <= 0) {
+          let i = this.cart.indexOf(itemInCart)
+          if (i !== -1) {
+            this.cart.splice(i, 1)
+          }
+        }
+      }
     }
   }
 </script>

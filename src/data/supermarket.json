@@ -1,0 +1,137 @@
+[
+  {
+    "icon": "apple-1",
+    "name": "Maça",
+    "price": 129
+  },
+  {
+    "icon": "avocado",
+    "name": "Avocado",
+    "price": 149
+  },
+  {
+    "icon": "banana",
+    "name": "Banana - dúzia",
+    "price": 445
+  },
+  {
+    "icon": "biscuit",
+    "name": "Bolacha",
+    "price": 199
+  },
+  {
+    "icon": "bread",
+    "name": "Pão - tipo 1",
+    "price": 999
+  },
+  {
+    "icon": "bread-1",
+    "name": "Pão - tipo 2",
+    "price": 1299
+  },
+  {
+    "icon": "broccoli",
+    "name": "Brócolis",
+    "price": 159
+  },
+  {
+    "icon": "cake",
+    "name": "Bolo",
+    "price": 2999
+  },
+  {
+    "icon": "carrot",
+    "name": "Cenoura",
+    "price": 199
+  },
+  {
+    "icon": "cheese",
+    "name": "Queijo - tipo 1",
+    "price": 880
+  },
+  {
+    "icon": "cheese-1",
+    "name": "Queijo - tipo 2",
+    "price": 1189
+  },
+  {
+    "icon": "cookies",
+    "name": "Cookies",
+    "price": 469
+  },
+  {
+    "icon": "cupcake",
+    "name": "Cupcake - tipo 1",
+    "price": 359
+  },
+  {
+    "icon": "cupcake-1",
+    "name": "Cupcake - tipo 2",
+    "price": 359
+  },
+  {
+    "icon": "eggs",
+    "name": "Ovo - dúzia",
+    "price": 599
+  },
+  {
+    "icon": "honey",
+    "name": "Mel",
+    "price": 869
+  },
+  {
+    "icon": "pizza",
+    "name": "Pizza - fatia",
+    "price": 699
+  },
+  {
+    "icon": "pizza-1",
+    "name": "Pizza - tipo 1",
+    "price": 1899
+  },
+  {
+    "icon": "pizza-2",
+    "name": "Pizza - tipo 2",
+    "price": 1999
+  },
+  {
+    "icon": "pizza-3",
+    "name": "Pizza - tipo 3",
+    "price": 2099
+  },
+  {
+    "icon": "potato",
+    "name": "Batata - dúzia",
+    "price": 499
+  },
+  {
+    "icon": "rice",
+    "name": "Arroz",
+    "price": 455
+  },
+  {
+    "icon": "strawberry",
+    "name": "Morango - dúzia",
+    "price": 780
+  },
+  {
+    "icon": "taco",
+    "name": "Taco",
+    "price": 990
+  },
+  {
+    "icon": "turkey",
+    "name": "Peru",
+    "price": 2149
+  },
+  {
+    "icon": "shrimp",
+    "name": "Camarão - dúzia",
+    "price": 1250
+  },
+  {
+    "icon": "watermelon",
+    "name": "Melancia",
+    "price": 825
+  }
+]
